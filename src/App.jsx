@@ -1,10 +1,13 @@
+import GreetingCard from "./components/GreetingCard";
 
 function App() {
-  const [count, setCount] = useState(0);
+
+  const name = "John Doe";
+
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <h1 className="text-4xl font-bold text-blue-300">My First Page</h1>
+      <GreetingCard name={name} message="Welcome to my new first react app" />
     </div>
   );
 }
