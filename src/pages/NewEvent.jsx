@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router";
 
-const Home = () => {
+const NewEvent = () => {
   return (
     <div>
-      <h1 className="text-2xl font-bold">Home page</h1>
-     
+      <h1>New Event Page</h1>
+
+   
     </div>
   );
 };
 
-export default Home;
+export default NewEvent;
