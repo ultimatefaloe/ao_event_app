@@ -3,7 +3,9 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import NewEvent from "./pages/NewEvent";
+import NotFound from "./pages/NotFound"; // Import the NotFound component
 import RootLayout from "./components/layouts/RootLayout";
+
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "*",
+    element: <NotFound />, // You can create a NotFound component for handling 404 errors
+  }
 ]);
 
 const App = () => {
