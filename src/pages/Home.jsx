@@ -1,11 +1,55 @@
 import React from "react";
-import { Link } from "react-router";
+import Button from "../components/ui/Button";
+import StatCard from "../components/StatCard";
+import { useNavigate } from "react-router";
+import { Plus } from "lucide-react";
+
+const stats = [
+  {
+    title: "Total Events",
+    value: 0,
+    color: "blue",
+  },
+  {
+    title: "Upcoming Events",
+    value: 0,
+    color: "gray",
+  },
+  {
+    title: "Completed Events",
+    value: 0,
+    color: "green",
+  },
+];
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Home page</h1>
-     
+    <div className="p-4">
+      <div>
+        <h1 className="text-2xl md:text-4xl font-bold text-white pb-3">
+          Welcome to EventApp
+        </h1>
+        <p>Create, manage, and track your events — all stored locally.</p>
+        <div className="flex items-center justify-center mt-4">
+          <Button onClick={() => navigate("/events/new")}>
+            <Plus className="w-5 h-5 text-white" />
+            Create New Event
+          </Button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        {stats.map((stat, index) => (
+          <StatCard
+            key={index}
+            title={stat.title}
+            value={stat.value}
+            // color={stat.color}
+          />
+        ))}
+      </div>
     </div>
   );
 };
