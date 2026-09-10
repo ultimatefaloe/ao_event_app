@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "../components/ui/Button";
-import StatCard from "../components/StatCard";
-import { useNavigate } from "react-router";
-import { Plus } from "lucide-react";
+import StatCard from "../components/ui/StatCard";
+import { Link, useNavigate } from "react-router";
+import { Plus, ArrowRight } from "lucide-react";
 
 const stats = [
   {
@@ -49,6 +49,14 @@ const Home = () => {
             // color={stat.color}
           />
         ))}
+      </div>
+      <div className="flex justify-center items-center mt-4">
+        <Link
+          to="/events"
+          className="flex items-center gap-3 text-indigo-500 hover:text-indigo-400 hover:underline"
+        >
+          Browser all events <ArrowRight className="w-5 h-5" />
+        </Link>
       </div>
     </div>
   );
