@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 const Events = () => {
   const [filter, setFilter] = useState({
     searchTerm: "",
-    category: "",
+    category: "all",
     status: "",
   });
 
