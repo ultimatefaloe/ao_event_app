@@ -1,41 +1,44 @@
-import React from "react";
-import { Link } from "react-router";
-import { format } from "date-fns";
-import { CalendarCheck } from "lucide-react";
-import { LocationEditIcon } from "lucide-react";
+import React from 'react'
+import { Link } from 'react-router';
+import { format } from 'date-fns';
+import { Calendar, LocationEdit } from "lucide-react";
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event}) => {
   const { id, name, date, location, status, category } = event;
+  const formattedDate = format(new Date(date), 'MMM dd, yyyy, h:mm a');
 
-  const formatedDate = format(new Date(date), "MMMM dd, yyyy");
   return (
-    <div className="flex flex-col gap-4 bg-indigo-800/30 rounded-lg p-4 border border-gray-500/40">
-      {/* Event card header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-white">{name}</h2>
-        <div className="flex gap-3">
-          <div className="px-3 py rounded-full border border-blue-500 text-blue-500 bg-blue-500/20">
-            {status}
-          </div>
-          <div className="px-3 py rounded-full border border-green-500 text-green-500 bg-green-500/20">
-            {category}
+    <div className="flex p-3 flex-col gap-3 bg-indigo-400/10 rounded-lg border-indigo-200/30 border">
+        {/* Event card header */}
+        <div className="flex justify-between items-center ">
+          <h2 className="text-lg font-semibold text-white">{name}</h2>
+
+          <div className="flex gap-3 items-center">
+            <span className="py px-3 border border-indigo-600 bg-indigo-600/20 rounded-full ">
+              {status}
+            </span>
+            <span className="py px-3 border border-green-600 bg-green-600/20 rounded-full ">
+              {category}
+            </span>
           </div>
         </div>
-      </div>
-      {/* Event card content */}
-      <div className="flex flex-col gap-2 text-left">
-        <p className="flex gap-2 items-center">
-          <CalendarCheck className="w-5 h-5" /> {formatedDate}
-        </p>
-        <p className="flex gap-2 items-center">
-          <LocationEditIcon className="w-5 h-5" /> {location}
-        </p>
-        <Link to={`/events/${id}`} className="text-blue-500 hover:underline">
-          View Details →
-        </Link>
-      </div>
-    </div>
-  );
-};
+        {/* Event card content */}
+        <div className="flex flex-col gap-2 text-left">
+          <p className="flex items-center gap-1">
+            <Calendar className="w-4 h-4 inline-block mr-2" />
+            <span>{formattedDate}</span>
+          </p>
+          <p className="flex items-center gap-1">
+            <LocationEdit className="w-4 h-4 inline-block mr-2" />
+            <span>{location}</span>
+          </p>
 
-export default EventCard;
+          <Link to={`/events/${id}`} className="text-blue-500 hover:underline">
+            View Details →
+          </Link>
+        </div>
+      </div>
+  )
+}
+
+export default EventCard

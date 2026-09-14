@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
 import Button from "../components/ui/Button";
 import { Plus } from "lucide-react";
 import EventCard from "../components/events/EventCard";
@@ -114,8 +113,8 @@ const Events = () => {
 
       {/* events list */}
       <div className="flex flex-col gap-3">
-        {events.map((event, index) => (
-          <EventCard key={index} event={event} />
+        {events.map((event) => (
+          <EventCard key={event.id} event={event} />
         ))}
       </div>
     </div>
