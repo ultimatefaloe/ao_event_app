@@ -3,10 +3,9 @@ import EventForm from "../components/events/EventForm";
 
 const NewEvent = () => {
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = (data) => {
     console.log("Form submitted");
+    console.log(data);
   }
   return (
     <div>
