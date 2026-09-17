@@ -1,44 +1,59 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router';
 import { format } from 'date-fns';
-import { Calendar, LocationEdit } from "lucide-react";
+import { Calendar, MapPin, Users, ArrowRight } from 'lucide-react';
 
-const EventCard = ({ event}) => {
-  const { id, name, date, location, status, category } = event;
+const EventCard = ({ event }) => {
+  const { id, name, description, date, location, attendees, thunmailUrl } = event;
   const formattedDate = format(new Date(date), 'MMM dd, yyyy, h:mm a');
 
   return (
-    <div className="flex p-3 flex-col gap-3 bg-indigo-400/10 rounded-lg border-indigo-200/30 border">
-        {/* Event card header */}
-        <div className="flex justify-between items-center ">
-          <h2 className="text-lg font-semibold text-white">{name}</h2>
+    <div className="group flex flex-col bg-slate-900/60 rounded-xl border border-indigo-500/20 overflow-hidden backdrop-blur-sm transition-all duration-300 hover:border-indigo-400/50 hover:shadow-lg hover:shadow-indigo-500/20 hover:-translate-y-1">
+      {/* Thumbnail */}
+      <div className="relative w-full h-44 overflow-hidden">
+        <img
+          src={thunmailUrl}
+          alt={name}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent" />
+        <span className="absolute top-3 right-3 flex items-center gap-1 px-3 py-1 text-xs font-medium text-white bg-indigo-600/80 backdrop-blur-sm rounded-full border border-indigo-400/40">
+          <Users className="w-3 h-3" />
+          {attendees} attending
+        </span>
+      </div>
 
-          <div className="flex gap-3 items-center">
-            <span className="py px-3 border border-indigo-600 bg-indigo-600/20 rounded-full ">
-              {status}
-            </span>
-            <span className="py px-3 border border-green-600 bg-green-600/20 rounded-full ">
-              {category}
-            </span>
+      {/* Content */}
+      <div className="flex flex-col gap-3 p-4">
+        <h2 className="text-lg font-semibold text-white line-clamp-1 group-hover:text-indigo-300 transition-colors">
+          {name}
+        </h2>
+
+        <p className="text-sm text-slate-400 line-clamp-2 leading-relaxed">
+          {description}
+        </p>
+
+        <div className="flex flex-col gap-2 text-sm text-slate-300">
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-indigo-400 shrink-0" />
+            <span>{formattedDate}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-indigo-400 shrink-0" />
+            <span className="line-clamp-1">{location}</span>
           </div>
         </div>
-        {/* Event card content */}
-        <div className="flex flex-col gap-2 text-left">
-          <p className="flex items-center gap-1">
-            <Calendar className="w-4 h-4 inline-block mr-2" />
-            <span>{formattedDate}</span>
-          </p>
-          <p className="flex items-center gap-1">
-            <LocationEdit className="w-4 h-4 inline-block mr-2" />
-            <span>{location}</span>
-          </p>
 
-          <Link to={`/events/${id}`} className="text-blue-500 hover:underline">
-            View Details →
-          </Link>
-        </div>
+        <Link
+          to={`/events/${id}`}
+          className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors group/link"
+        >
+          View Details
+          <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+        </Link>
       </div>
-  )
-}
+    </div>
+  );
+};
 
-export default EventCard
+export default EventCard;

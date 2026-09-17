@@ -2,38 +2,7 @@ import React, { useState } from "react";
 import Button from "../components/ui/Button";
 import { Plus } from "lucide-react";
 import EventCard from "../components/events/EventCard";
-
-const events = [
-  {
-    id: "507f1f77bcf86cd799439011",
-    name: "Tech Meetup",
-    date: "2026-08-20T18:00:00.000Z",
-    location: "Nairobi, Kenya",
-    status: "upcoming",
-    category: "meetup",
-    description: "Discuss upcoming platform improvements and launch plans.",
-  },
-  {
-    id: "507f1f77bcf86cd7994390112",
-    name: "Web Development Conference",
-    date: "2026-09-15T09:00:00.000Z",
-    location: "San Francisco, USA",
-    status: "upcoming",
-    category: "conference",
-    description:
-      "Join industry experts to explore the latest trends in web development.",
-  },
-  {
-    id: "507f1f77bcf86cd7994390131",
-    name: "Startup Pitch Night",
-    date: "2026-10-05T19:00:00.000Z",
-    location: "London, UK",
-    status: "upcoming",
-    category: "meetup",
-    description:
-      "Entrepreneurs pitch their innovative ideas to a panel of investors.",
-  },
-];
+import { events } from "../data"
 
 const Events = () => {
   const [filter, setFilter] = useState({
