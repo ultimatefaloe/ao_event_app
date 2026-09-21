@@ -46,7 +46,7 @@ const Home = () => {
             key={index}
             title={stat.title}
             value={stat.value}
-            // color={stat.color}
+            color={stat.color}
           />
         ))}
       </div>

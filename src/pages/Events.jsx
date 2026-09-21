@@ -3,8 +3,10 @@ import Button from "../components/ui/Button";
 import { Plus } from "lucide-react";
 import EventCard from "../components/events/EventCard";
 import { events } from "../data";
+import { useNavigate } from 'react-router'
 
 const Events = () => {
+  const navigate = useNavigate()
   const [filter, setFilter] = useState({
     searchTerm: "",
     category: "all",
@@ -26,6 +28,7 @@ const Events = () => {
   };
 
   const routeToNewEvent = () => {
+    navigate('/events/new')
     // import useNavigate from react-router and use it to navigate to the new event page
   };
 

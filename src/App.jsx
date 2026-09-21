@@ -5,7 +5,7 @@ import Events from "./pages/Events";
 import NewEvent from "./pages/NewEvent";
 import NotFound from "./pages/NotFound"; // Import the NotFound component
 import RootLayout from "./components/layouts/RootLayout";
-
+import EventDetail from "./pages/EventDetail";
 
 const router = createBrowserRouter([
   {
@@ -25,15 +25,20 @@ const router = createBrowserRouter([
         element: <NewEvent />,
       },
       {
-        path: "/events/:id", //id less user experience  and slug improves user experience
-        element: <Events />,
+        path: "/events/edit",
+        element: <NewEvent />,
       },
+      {
+        path: "/events/:id", //id less user experience  and slug improves user experience
+        element: <EventDetail />,
+      }
     ],
   },
+
   {
     path: "*",
     element: <NotFound />, // You can create a NotFound component for handling 404 errors
-  }
+  },
 ]);
 
 const App = () => {

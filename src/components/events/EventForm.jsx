@@ -14,6 +14,7 @@ import { toast } from 'react-toastify'
 
 const EventForm = ({ onSubmit, event  }) => {
   const [formData, setFormData] = useState({
+    id:event?.id,
     name: event?.name || "",
     description: event?.description || "",
     date: event?.date || "",
@@ -30,9 +31,8 @@ const EventForm = ({ onSubmit, event  }) => {
     }));
   };
 
-  const onSubbmitHandler = (e) => {
+  const onSubmitHandler = (e) => {
     e.preventDefault();
-
 
     if( !formData.name || !formData.description || !formData.date || !formData.location || !formData.thunmailUrl) {
       toast.warn("Please fill the require fields");
@@ -55,7 +55,7 @@ const EventForm = ({ onSubmit, event  }) => {
 
   return (
     <div className="p-3">
-      <form className="flex flex-col gap-4 max-w-150" onSubmit={onSubbmitHandler}>
+      <form className="flex flex-col gap-4 max-w-150" onSubmit={onSubmitHandler}>
         <div className="flex flex-col gap-2 text-left">
           <label htmlFor="name">Name:</label>
           <input
