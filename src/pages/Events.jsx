@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import Button from "../components/ui/Button";
-import { Plus } from "lucide-react";
-import EventCard from "../components/events/EventCard";
-import { events } from "../data";
 import { useNavigate } from 'react-router'
+import { Plus } from "lucide-react";
+import { useEvent } from "../hooks/useEvent";
+import Button from "../components/ui/Button";
+import EventCard from "../components/events/EventCard";
 
 const Events = () => {
+  const { events } = useEvent();
   const navigate = useNavigate()
   const [filter, setFilter] = useState({
     searchTerm: "",
