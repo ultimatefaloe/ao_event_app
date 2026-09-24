@@ -37,6 +37,29 @@ const router = createBrowserRouter([
         path: "/events/:id/edit",
         element: <EditEvent />,
       },
+      {
+        path: '/profile',
+        element: <Profile />,
+      },
+    
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/auth/login",
+        element: <Login />,
+      },
+      { 
+        path: "/auth/register",
+        element: <Register />,
+      },
+       { 
+        path: "/auth/forgot-password",
+        element: <Register />,
+      },
     ],
   },
   {
