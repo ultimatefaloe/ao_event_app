@@ -10,7 +10,6 @@
 import React, { useState } from "react";
 import Button from "../ui/Button";
 import { Plus } from "lucide-react";
-import { toast } from 'react-toastify'
 
 const EventForm = ({ onSubmit, event  }) => {
   const [formData, setFormData] = useState({
@@ -33,13 +32,6 @@ const EventForm = ({ onSubmit, event  }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
-    if( !formData.name || !formData.description || !formData.date || !formData.location || !formData.thunmailUrl) {
-      toast.warn("Please fill the require fields");
-      return;
-    }
-
-    toast.success("Form submitted successfully");
     onSubmit(formData);
     setFormData({
       name: "",

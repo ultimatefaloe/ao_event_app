@@ -6,6 +6,7 @@ import NewEvent from "./pages/NewEvent";
 import NotFound from "./pages/NotFound"; // Import the NotFound component
 import RootLayout from "./components/layouts/RootLayout";
 import EventDetail from "./pages/EventDetail";
+import EditEvent from "./pages/EditEvent";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
       {
         path: "/events/:id", //id less user experience  and slug improves user experience
         element: <EventDetail />,
-      }
+      },
+      {
+        path: "/events/:id/edit",
+        element: <EditEvent />,
+      },
     ],
   },
 
