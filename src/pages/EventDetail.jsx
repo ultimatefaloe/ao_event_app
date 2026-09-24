@@ -4,11 +4,12 @@ import { events } from "../data";
 import Button from "../components/ui/Button";
 import { useEvent } from "../hooks/useEvent";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const EventDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { getEventById } = useEvent();
+  const { getEventById, deleteEvent } = useEvent();
 
   const event = getEventById(id);
 
@@ -35,7 +36,16 @@ const EventDetail = () => {
   const handleEdit = () => {
     navigate(`/events/${event.id}/edit`);
   };
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    const result = deleteEvent(id);
+    if (result.success) {
+      toast.success(result.message || "Event deleted successfully:");
+      navigate("/events");
+    } else {
+      toast.error(result.message);
+      console.error(result.message);
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto p-6 font-[var(--sans)] text-[var(--text)]">

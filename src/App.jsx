@@ -39,7 +39,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-
   {
     path: "*",
     element: <NotFound />, // You can create a NotFound component for handling 404 errors

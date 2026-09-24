@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 
 const EditEvent = () => {
   const { id } =  useParams();
-  const { createEvent, getEventById } = useEvent();
+  const { editEvent, getEventById } = useEvent();
 
   const event = getEventById(id);
 
@@ -18,7 +18,15 @@ const EditEvent = () => {
     )
   }
 
-  const handleSubmit = (data) => { };
+  const handleSubmit = (data) => {
+    const result = editEvent(id, data);
+    if (result.success) {
+      console.log("Event updated successfully:", result.data);
+      toast.success(result.message);
+    } else {
+      toast.error(result.message);
+    }
+   };
 
   return (
     <div>
