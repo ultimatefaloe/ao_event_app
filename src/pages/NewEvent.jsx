@@ -1,10 +1,12 @@
 import React from "react";
 import EventForm from "../components/events/EventForm";
-import { useEvent } from "../hooks/useEvent";
+// import { useEvent } from "../hooks/useEvent";
 import { toast } from "react-toastify";
+import { useEventStore } from "../stores/useEvent.store";
 
 const NewEvent = () => {
-  const { createEvent } = useEvent();
+  // const { createEvent } = useEvent();
+  const createEvent = useEventStore((s) => s.createEvent);
 
   const handleSubmit = (data) => {
     const result = createEvent(data);

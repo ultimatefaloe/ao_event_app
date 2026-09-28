@@ -37,31 +37,30 @@ const router = createBrowserRouter([
         path: "/events/:id/edit",
         element: <EditEvent />,
       },
-      {
-        path: '/profile',
-        element: <Profile />,
-      },
+      // {
+      //   path: '/profile',
+      //   element: <Profile />,
+      // },
     
     ],
   },
-  {
-    path: "/auth",
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "/auth/login",
-        element: <Login />,
-      },
-      { 
-        path: "/auth/register",
-        element: <Register />,
-      },
-       { 
-        path: "/auth/forgot-password",
-        element: <Register />,
-      },
-    ],
-  },
+  // {
+  //   element: <AuthLayout />,
+  //   children: [
+  //     {
+  //       path: "/login",
+  //       element: <Login />,
+  //     },
+  //     { 
+  //       path: "/register",
+  //       element: <Register />,
+  //     },
+  //      { 
+  //       path: "/forgot-password",
+  //       element: <Register />,
+  //     },
+  //   ],
+  // },
   {
     path: "*",
     element: <NotFound />, // You can create a NotFound component for handling 404 errors

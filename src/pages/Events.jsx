@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router'
 import { Plus } from "lucide-react";
-import { useEvent } from "../hooks/useEvent";
+// import { useEvent } from "../hooks/useEvent";
 import Button from "../components/ui/Button";
 import EventCard from "../components/events/EventCard";
+import { useEventStore } from "../stores/useEvent.store";
 
 const Events = () => {
-  const { events } = useEvent();
+  // const { events } = useEvent();
+  const events = useEventStore((s) => s.events);
   const navigate = useNavigate()
   const [filter, setFilter] = useState({
     searchTerm: "",
@@ -32,6 +34,14 @@ const Events = () => {
     navigate('/events/new')
     // import useNavigate from react-router and use it to navigate to the new event page
   };
+
+  if (events.length === 0) {
+    return (
+      <div className="p-4 h-screen flex flex-col justify-center items-center">
+        <p className="text-white">No events found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">

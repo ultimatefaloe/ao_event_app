@@ -13,3 +13,8 @@
 - make sure you make use of reusable component
 - ensure you follow the data model from the documentation 
 https://event-api-service-3jtj.onrender.com/api-docs
+
+
+## ass 2
+- improve data validatation on useEvent.store.js create function
+- add update and delete logic to the useEventStore and then implement it in eventdetail page, implement the logic on eventcard also
