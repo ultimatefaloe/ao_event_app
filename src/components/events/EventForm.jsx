@@ -9,11 +9,11 @@
 
 import React, { useState } from "react";
 import Button from "../ui/Button";
-import { Plus } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 
-const EventForm = ({ onSubmit, event  }) => {
+const EventForm = ({ onSubmit, event }) => {
   const [formData, setFormData] = useState({
-    id:event?.id,
+    id: event?.id,
     name: event?.name || "",
     description: event?.description || "",
     date: event?.date || "",
@@ -41,13 +41,14 @@ const EventForm = ({ onSubmit, event  }) => {
       attendees: 0,
       thunmailUrl: "",
     });
-  }
-
-
+  };
 
   return (
     <div className="p-3">
-      <form className="flex flex-col gap-4 max-w-150" onSubmit={onSubmitHandler}>
+      <form
+        className="flex flex-col gap-4 max-w-150"
+        onSubmit={onSubmitHandler}
+      >
         <div className="flex flex-col gap-2 text-left">
           <label htmlFor="name">Name:</label>
           <input
@@ -123,7 +124,15 @@ const EventForm = ({ onSubmit, event  }) => {
         </div>
         <div className="flex w-full">
           <Button type="submit" className="w-full justify-center mt-5">
-            <Plus className="w-4 h-4" /> Create Event
+            {event ? (
+              <>
+                <Pencil className="w-4 h-4" /> Update Event
+              </>
+            ) : (
+              <>
+                <Plus className="w-4 h-4" /> Create Event
+              </>
+            )}
           </Button>
         </div>
       </form>

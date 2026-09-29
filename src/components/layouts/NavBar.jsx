@@ -1,5 +1,5 @@
 import { NavLink, Link } from "react-router";
-import { Moon, Sun, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 // import { useTheme } from "../../context/ThemeContext";
 
 const NavBar = () => {
@@ -38,12 +38,31 @@ const NavBar = () => {
           Events
         </NavLink>
 
+
         <Link
           to="/events/new"
           className="flex items-center gap-1 bg-indigo-600 text-white px-3 py-1.5 rounded hover:bg-indigo-700 text-sm font-medium"
-        >
+          >
           <Plus size={16} />
           New Event
+        </Link>
+
+          {/* <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive
+                ? "text-indigo-600 dark:text-indigo-400 font-medium"
+                : "text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+            }
+          >
+            Profile
+          </NavLink> */}
+          
+        <Link
+          to="/login"
+          className="text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
+        >
+          Login
         </Link>
 
         {/* <button

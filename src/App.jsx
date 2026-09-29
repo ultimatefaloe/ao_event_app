@@ -7,6 +7,11 @@ import NotFound from "./pages/NotFound"; // Import the NotFound component
 import RootLayout from "./components/layouts/RootLayout";
 import EventDetail from "./pages/EventDetail";
 import EditEvent from "./pages/EditEvent";
+import AuthLayout from "./components/layouts/AuthLayout";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import Profile from "./pages/auth/Profile";
 
 const router = createBrowserRouter([
   {
@@ -37,30 +42,30 @@ const router = createBrowserRouter([
         path: "/events/:id/edit",
         element: <EditEvent />,
       },
-      // {
-      //   path: '/profile',
-      //   element: <Profile />,
-      // },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
     
     ],
   },
-  // {
-  //   element: <AuthLayout />,
-  //   children: [
-  //     {
-  //       path: "/login",
-  //       element: <Login />,
-  //     },
-  //     { 
-  //       path: "/register",
-  //       element: <Register />,
-  //     },
-  //      { 
-  //       path: "/forgot-password",
-  //       element: <Register />,
-  //     },
-  //   ],
-  // },
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      { 
+        path: "/register",
+        element: <Register />,
+      },
+       { 
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+    ],
+  },
   {
     path: "*",
     element: <NotFound />, // You can create a NotFound component for handling 404 errors
