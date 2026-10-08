@@ -1,11 +1,47 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
+import { register } from "../../services/auth.service";
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit =  async (e) => {
     e.preventDefault();
+
+    setLoading(true);
+    try {
+      console.log("Form Data:", formData); // Log the form data for debugging
+      const response = await register(formData);
+
+      if (response.error) {
+        throw new Error(response.error);
+      }
+      toast.success("Registration successful!");
+      navigate("/profile");
+    } catch (error) {
+      console.error("Registration error:", error.message);
+      toast.error(error.message ?? "An error occurred during registration.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
@@ -17,11 +53,12 @@ const Register = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
-          id="fullName"
-          name="fullName"
+          id="name"
+          name="name"
           label="Full name"
           placeholder="Your name"
           autoComplete="name"
+          onChange={onChangeHandler}
           required
         />
         <Input
@@ -31,6 +68,7 @@ const Register = () => {
           label="Email"
           placeholder="you@example.com"
           autoComplete="email"
+          onChange={onChangeHandler}
           required
         />
         <Input
@@ -40,6 +78,7 @@ const Register = () => {
           label="Password"
           placeholder="Choose a password"
           autoComplete="new-password"
+          onChange={onChangeHandler}
           required
         />
         <Input
@@ -49,10 +88,11 @@ const Register = () => {
           label="Confirm password"
           placeholder="Re-enter your password"
           autoComplete="new-password"
+          onChange={onChangeHandler}
           required
         />
-        <Button type="submit" className="w-full justify-center">
-          Register
+        <Button type="submit" className="w-full justify-center" disabled={loading}>
+          {loading ? "Registering..." : "Register"}
         </Button>
       </form>
 

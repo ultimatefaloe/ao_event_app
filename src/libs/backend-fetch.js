@@ -1,7 +1,4 @@
-import { useTokenStore } from "../stores/useToken.store";
-
 export const backendFetch = async (endpoint, options = {}) => {
-  const token = useTokenStore((s) => s.token);
   const api_url =
     import.meta.env.VITE_API_URL ||
     "https://event-api-service-3jtj.onrender.com/api/v1";
@@ -11,26 +8,27 @@ export const backendFetch = async (endpoint, options = {}) => {
   }
 
   const full_endpoint = `${api_url}/${endpoint}`;
-  const bear_token = `Bearer ${token}`;
+  const token = options?.token;
+  const bear_token = `Bearer ${token ?? ""}`;
 
   try {
     const response = await fetch(full_endpoint, {
       ...options,
       headers: {
         "Content-Type": "application/json",
-        // Authorizaton: bear_token,
+        ...token && { Authorization: bear_token },
         ...options.headers,
       },
     });
+    const data = await response.json();
 
     if (!response.ok) {
-      throw new Error("Something went wrong");
+      throw new Error(data.message ?? "Something went wrong");
     }
 
-    const data=  await response.json();
-    console.log("data from backend fetch", data);
     return data;
   } catch (error) {
-    console.error("Error proceesing request", error);
+    console.error("Error proceesing request", error.message);
+    return { error: error.message };
   }
 };
