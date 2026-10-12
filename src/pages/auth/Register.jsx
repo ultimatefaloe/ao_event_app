@@ -4,8 +4,12 @@ import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
 import { register } from "../../services/auth.service";
 import { toast } from "react-toastify";
+// import the useAuth hook from the AuthContext to access the setAuth function for managing authentication state
+import { useAuth } from "../../context/AuthContext";
 
 const Register = () => {
+  // use the setAuth function from the AuthContext to update the user and authentication state
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -15,7 +19,7 @@ const Register = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit =  async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
@@ -26,6 +30,8 @@ const Register = () => {
       if (response.error) {
         throw new Error(response.error);
       }
+      // set auth will handle the token and user state management in the context, and store the token in localStorage using Zustand
+      setAuth(response);
       toast.success("Registration successful!");
       navigate("/profile");
     } catch (error) {
@@ -91,7 +97,11 @@ const Register = () => {
           onChange={onChangeHandler}
           required
         />
-        <Button type="submit" className="w-full justify-center" disabled={loading}>
+        <Button
+          type="submit"
+          className="w-full justify-center"
+          disabled={loading}
+        >
           {loading ? "Registering..." : "Register"}
         </Button>
       </form>

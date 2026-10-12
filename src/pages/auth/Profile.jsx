@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
+import { useAuth } from "../../context/AuthContext";
 
 const Profile = () => {
+  const { user } = useAuth();
   const [profile, setProfile] = useState({
-    id: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
-    name: "John Doe",
-    email: "user@ultimateintelliforge.org",
-    role: "attendee",
+    id: user?.id || "",
+    name: user?.name || "",
+    email: user?.email || "",
+    role: user?.role || "",
   });
 
   const handleChange = (e) => {
@@ -24,8 +26,12 @@ const Profile = () => {
 
   return (
     <section className="p-4 max-w-xl mx-auto">
-      <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Profile</h1>
-      <p className="text-sm text-gray-400 mb-6">Update your profile information.</p>
+      <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+        Profile
+      </h1>
+      <p className="text-sm text-gray-400 mb-6">
+        Update your profile information.
+      </p>
 
       <form
         onSubmit={handleSubmit}

@@ -3,10 +3,13 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 export const useTokenStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       token: null,
+      user: null,
+      isAuthenticated: () => !!get().token,
       setToken: (token) => set({ token }),
-      reset: () => set({ token: null }),
+      setUser: (user) => set({ user }),
+      reset: () => set({ token: null, user: null }),
     }),
     {
       name: "ao:event:auth:token",

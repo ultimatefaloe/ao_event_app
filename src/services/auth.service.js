@@ -45,7 +45,23 @@ export const register = async (data) => {
   }
 };
 
-
 export const forgotPassword = async (data) => {};
 export const refreshToken = async (data) => {};
-export const me = async (data) => {};
+
+
+
+export const me = async (token) => {
+  try {
+    const response = await backendFetch(AUTH_ENDPOINTS.ME, {
+      method: "GET",
+      token,
+    });
+
+    if (!response || response.error) {
+      throw new Error(response?.error || "Login failed");
+    }
+    return response.data;
+  } catch (error) {
+    return { error: error.message };
+  }
+};
