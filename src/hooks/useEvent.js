@@ -5,17 +5,31 @@
 //  d = delete
 import { useState, useEffect } from "react";
 import { events as initialEvents } from "../data";
+import { getEvents } from "../services/event.service";
 
-export const useEvent = () => {
+export const useEvent = (query) => {
   const [events, setEvents] = useState([]);
-
-  const getEvents = () => {
-    setEvents(initialEvents);
-  };
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getEvents();
-  }, []);
+    const fetchEvents = async () => {
+      try {
+        const events = await getEvents(query && query );
+        setEvents(events);
+      } catch (error) {
+        console.log("[useEvent] Error fetching events:", error);
+        setError(error);
+        setEvents([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [query]);
+
+
 
   // get event by id,
   const getEventById = (id) => {
@@ -24,7 +38,6 @@ export const useEvent = () => {
   };
 
   const createEvent = (newEvent) => {
-
     if (
       !newEvent.name ||
       !newEvent.description ||
@@ -58,27 +71,29 @@ export const useEvent = () => {
   };
 
   const editEvent = (eventId, updatedEvent) => {
-      const event = getEventById(eventId);
-      // guard clause
-      if (!event) {
-        return {
-          success: false,
-          message: "Event not found",
-        };
-      }
-
-      const newEventPayload = {
-        ...event,
-        ...updatedEvent,
-      };
-
-      const updatedEvents = events.map(event => event.id === eventId ? newEventPayload : event);
-      setEvents(updatedEvents);
+    const event = getEventById(eventId);
+    // guard clause
+    if (!event) {
       return {
-        success: true,
-        message: "Event updated successfully",
-        data: newEventPayload,
+        success: false,
+        message: "Event not found",
       };
+    }
+
+    const newEventPayload = {
+      ...event,
+      ...updatedEvent,
+    };
+
+    const updatedEvents = events.map((event) =>
+      event.id === eventId ? newEventPayload : event,
+    );
+    setEvents(updatedEvents);
+    return {
+      success: true,
+      message: "Event updated successfully",
+      data: newEventPayload,
+    };
   };
 
   const deleteEvent = (eventId) => {
@@ -91,7 +106,7 @@ export const useEvent = () => {
       };
     }
 
-    const updatedEvents = events.filter(event => event.id !== eventId);
+    const updatedEvents = events.filter((event) => event.id !== eventId);
     setEvents(updatedEvents);
 
     return {
@@ -101,6 +116,8 @@ export const useEvent = () => {
   };
 
   return {
+    loading,
+    error,
     events,
     getEventById,
     createEvent,

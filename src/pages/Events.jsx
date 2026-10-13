@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router'
+import { useNavigate } from "react-router";
 import { Plus } from "lucide-react";
-// import { useEvent } from "../hooks/useEvent";
 import Button from "../components/ui/Button";
 import EventCard from "../components/events/EventCard";
-import { useEventStore } from "../stores/useEvent.store";
+import { useEvent } from "../hooks/useEvent";
 
+
+// implement debounce to avoid sending request per key stroke
 const Events = () => {
-  // const { events } = useEvent();
-  const events = useEventStore((s) => s.events);
-  const navigate = useNavigate()
+  // const events = useEventStore((s) => s.events);
+  const navigate = useNavigate();
   const [filter, setFilter] = useState({
-    searchTerm: "",
+    name: "",
     category: "all",
     status: "",
   });
+  const { events, loading, error } = useEvent(filter);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -31,17 +32,33 @@ const Events = () => {
   };
 
   const routeToNewEvent = () => {
-    navigate('/events/new')
+    navigate("/events/new");
     // import useNavigate from react-router and use it to navigate to the new event page
   };
 
-  if (events.length === 0) {
+  if (loading) {
     return (
       <div className="p-4 h-screen flex flex-col justify-center items-center">
-        <p className="text-white">No events found.</p>
+        <p className="text-white">Loading events...</p>
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className="p-4 h-screen flex flex-col justify-center items-center">
+        <p className="text-white">Error: {error}</p>
+      </div>
+    );
+  }
+
+  // if (events.length === 0) {
+  //   return (
+  //     <div className="p-4 h-screen flex flex-col justify-center items-center">
+  //       <p className="text-white">No events found.</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="p-4">
@@ -62,13 +79,13 @@ const Events = () => {
       >
         <input
           type="search"
-          name="searchTerm"
-          id="searchTerm"
+          name="name"
+          id="name"
           placeholder="Search events..."
           onChange={handleFilterChange}
           className="w-full flex-1 bg-gray-800 text-white border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        
+
         <div className="flex gap-2">
           <select
             name="category"
@@ -99,9 +116,11 @@ const Events = () => {
 
       {/* events list */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
+        {events.length === 0 ? (
+          <p className="text-white">No events found.</p>
+        ) : (
+          events.map((event) => <EventCard key={event.id} event={event} />)
+        )}
       </div>
     </div>
   );
