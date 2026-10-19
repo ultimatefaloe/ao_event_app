@@ -75,50 +75,50 @@ export const useEvent = (query) => {
     }
   };
 
-  // const editEvent = (eventId, updatedEvent) => {
-  //   const event = getEventById(eventId);
-  //   // guard clause
-  //   if (!event) {
-  //     return {
-  //       success: false,
-  //       message: "Event not found",
-  //     };
-  //   }
+  const editEvent = (eventId, updatedEvent) => {
+    const event = getEventById(eventId);
+    // guard clause
+    if (!event) {
+      return {
+        success: false,
+        message: "Event not found",
+      };
+    }
 
-  //   const newEventPayload = {
-  //     ...event,
-  //     ...updatedEvent,
-  //   };
+    const newEventPayload = {
+      ...event,
+      ...updatedEvent,
+    };
 
-  //   const updatedEvents = events.map((event) =>
-  //     event.id === eventId ? newEventPayload : event,
-  //   );
-  //   setEvents(updatedEvents);
-  //   return {
-  //     success: true,
-  //     message: "Event updated successfully",
-  //     data: newEventPayload,
-  //   };
-  // };
+    const updatedEvents = events.map((event) =>
+      event.id === eventId ? newEventPayload : event,
+    );
+    setEvents(updatedEvents);
+    return {
+      success: true,
+      message: "Event updated successfully",
+      data: newEventPayload,
+    };
+  };
 
-  // const deleteEvent = (eventId) => {
-  //   const event = getEventById(eventId);
-  //   // guard clause
-  //   if (!event) {
-  //     return {
-  //       success: false,
-  //       message: "Event not found",
-  //     };
-  //   }
+  const deleteEvent = (eventId) => {
+    const event = getEventById(eventId);
+    // guard clause
+    if (!event) {
+      return {
+        success: false,
+        message: "Event not found",
+      };
+    }
 
-  //   const updatedEvents = events.filter((event) => event.id !== eventId);
-  //   setEvents(updatedEvents);
+    const updatedEvents = events.filter((event) => event.id !== eventId);
+    setEvents(updatedEvents);
 
-  //   return {
-  //     success: true,
-  //     message: "Event deleted successfully",
-  //   };
-  // };
+    return {
+      success: true,
+      message: "Event deleted successfully",
+    };
+  };
 
   return {
     loading,
@@ -126,7 +126,7 @@ export const useEvent = (query) => {
     events,
     getEventById,
     createEvent,
-    // editEvent,
-    // deleteEvent,
+    editEvent,
+    deleteEvent,
   };
 };
