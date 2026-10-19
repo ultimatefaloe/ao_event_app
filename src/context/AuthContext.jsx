@@ -1,9 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import { createContext } from "react";
 import { useTokenStore } from "../stores/useToken.store";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export default function AuthProvider({ children }) {
   // getting all value and funcition from the Zustand store (useTokenStore) to manage the token and user state
   const isAuthenticated = useTokenStore((state) => state.isAuthenticated());
   const user = useTokenStore((state) => state.user);
@@ -24,18 +24,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, setAuth, logout }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, token, setAuth, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-
-  return context;
-};

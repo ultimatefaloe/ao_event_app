@@ -5,7 +5,7 @@ import Input from "../../components/ui/Input";
 import { register } from "../../services/auth.service";
 import { toast } from "react-toastify";
 // import the useAuth hook from the AuthContext to access the setAuth function for managing authentication state
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const Register = () => {
   // use the setAuth function from the AuthContext to update the user and authentication state

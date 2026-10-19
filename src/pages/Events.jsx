@@ -5,7 +5,6 @@ import Button from "../components/ui/Button";
 import EventCard from "../components/events/EventCard";
 import { useEvent } from "../hooks/useEvent";
 
-
 // implement debounce to avoid sending request per key stroke
 const Events = () => {
   // const events = useEventStore((s) => s.events);

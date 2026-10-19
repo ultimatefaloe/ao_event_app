@@ -1,20 +1,18 @@
 import React from "react";
 import EventForm from "../components/events/EventForm";
-// import { useEvent } from "../hooks/useEvent";
+import { useEvent } from "../hooks/useEvent";
 import { toast } from "react-toastify";
-import { useEventStore } from "../stores/useEvent.store";
 
 const NewEvent = () => {
-  // const { createEvent } = useEvent();
-  const createEvent = useEventStore((s) => s.createEvent);
+  const { createEvent, error, loading } = useEvent();
 
   const handleSubmit = (data) => {
     const result = createEvent(data);
-    if (result.success) {
+    if (!error) {
       console.log("Event created successfully:", result.data);
-      toast.success(result.message);
+      toast.success("Event created successfully!");
     } else {
-      toast.error(result.message);
+      toast.error(error.message);
     }
   };
 

@@ -4,10 +4,17 @@
 //  u = update
 //  d = delete
 import { useState, useEffect } from "react";
-import { events as initialEvents } from "../data";
-import { getEvents } from "../services/event.service";
+import {
+  getEvents,
+  getMyEvents as serviceGetMyEvents,
+  getEventById as serviceGetEventById,
+  // set this as alias cause createEvent is already defined in this file
+  createEvent as serviceCreateEvent,
+} from "../services/event.service";
+import { useTokenStore } from "../stores/useToken.store";
 
 export const useEvent = (query) => {
+  const token = useTokenStore((s) => s.token);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +22,7 @@ export const useEvent = (query) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const events = await getEvents(query && query );
+        const events = await getEvents(query);
         setEvents(events);
       } catch (error) {
         console.log("[useEvent] Error fetching events:", error);
@@ -29,15 +36,23 @@ export const useEvent = (query) => {
     fetchEvents();
   }, [query]);
 
-
-
   // get event by id,
-  const getEventById = (id) => {
-    const event = events.find((event) => event.id === id);
-    return event;
+  const getEventById = async (id) => {
+    try {
+      setLoading(true);
+      console.log("[useEvent] Fetching event by id:", id);
+      const event = await serviceGetEventById(token, id);
+      return event;
+    } catch (error) {
+      console.log("[useEvent] Error fetching event by id:", error);
+      setError(error);
+      return null;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const createEvent = (newEvent) => {
+  const createEvent = async (newEvent) => {
     if (
       !newEvent.name ||
       !newEvent.description ||
@@ -45,75 +60,65 @@ export const useEvent = (query) => {
       !newEvent.location ||
       !newEvent.thunmailUrl
     ) {
-      return {
-        success: false,
-        message: "Please fill the require fields",
-      };
+      throw new Error("Missing required fields for creating an event");
     }
 
-    const payload = {
-      id: Date.now().toString(),
-      name: newEvent.name,
-      description: newEvent.description,
-      date: newEvent.date,
-      location: newEvent.location,
-      attendees: newEvent.attendees || 0,
-      thunmailUrl: newEvent.thunmailUrl,
-    };
-
-    setEvents((prevEvents) => [payload, ...prevEvents]);
-
-    return {
-      success: true,
-      message: "Event created successfully",
-      data: payload,
-    };
-  };
-
-  const editEvent = (eventId, updatedEvent) => {
-    const event = getEventById(eventId);
-    // guard clause
-    if (!event) {
-      return {
-        success: false,
-        message: "Event not found",
-      };
+    try {
+      setLoading(true);
+      const event = await serviceCreateEvent(token,newEvent);
+      return event;
+    } catch (error) {
+      console.log("[useEvent] Error creating event:", error);
+      setError(error);
+    } finally {
+      setLoading(false);
     }
-
-    const newEventPayload = {
-      ...event,
-      ...updatedEvent,
-    };
-
-    const updatedEvents = events.map((event) =>
-      event.id === eventId ? newEventPayload : event,
-    );
-    setEvents(updatedEvents);
-    return {
-      success: true,
-      message: "Event updated successfully",
-      data: newEventPayload,
-    };
   };
 
-  const deleteEvent = (eventId) => {
-    const event = getEventById(eventId);
-    // guard clause
-    if (!event) {
-      return {
-        success: false,
-        message: "Event not found",
-      };
-    }
+  // const editEvent = (eventId, updatedEvent) => {
+  //   const event = getEventById(eventId);
+  //   // guard clause
+  //   if (!event) {
+  //     return {
+  //       success: false,
+  //       message: "Event not found",
+  //     };
+  //   }
 
-    const updatedEvents = events.filter((event) => event.id !== eventId);
-    setEvents(updatedEvents);
+  //   const newEventPayload = {
+  //     ...event,
+  //     ...updatedEvent,
+  //   };
 
-    return {
-      success: true,
-      message: "Event deleted successfully",
-    };
-  };
+  //   const updatedEvents = events.map((event) =>
+  //     event.id === eventId ? newEventPayload : event,
+  //   );
+  //   setEvents(updatedEvents);
+  //   return {
+  //     success: true,
+  //     message: "Event updated successfully",
+  //     data: newEventPayload,
+  //   };
+  // };
+
+  // const deleteEvent = (eventId) => {
+  //   const event = getEventById(eventId);
+  //   // guard clause
+  //   if (!event) {
+  //     return {
+  //       success: false,
+  //       message: "Event not found",
+  //     };
+  //   }
+
+  //   const updatedEvents = events.filter((event) => event.id !== eventId);
+  //   setEvents(updatedEvents);
+
+  //   return {
+  //     success: true,
+  //     message: "Event deleted successfully",
+  //   };
+  // };
 
   return {
     loading,
@@ -121,7 +126,7 @@ export const useEvent = (query) => {
     events,
     getEventById,
     createEvent,
-    editEvent,
-    deleteEvent,
+    // editEvent,
+    // deleteEvent,
   };
 };

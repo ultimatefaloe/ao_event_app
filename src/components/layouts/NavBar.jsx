@@ -2,7 +2,7 @@ import { NavLink, Link } from "react-router";
 import { Plus } from "lucide-react";
 // import { useTheme } from "../../context/ThemeContext";
 // getting useAuth hook from the AuthContext to access the user and isAuthenticating function for user authentication state
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const NavBar = () => {
   // const { theme, toggleTheme } = useTheme();

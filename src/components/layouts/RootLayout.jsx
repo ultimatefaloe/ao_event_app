@@ -3,6 +3,7 @@ import { Outlet } from "react-router";
 import NavBar from "./NavBar";
 
 const RootLayout = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <div>
       <NavBar />
@@ -10,7 +11,7 @@ const RootLayout = () => {
       <main>
         <Outlet />
       </main>
-      <footer>&copy; {new Date().getFullYear()} All rights reserved.</footer>
+      <footer>&copy; {currentYear} All rights reserved.</footer>
     </div>
   );
 };

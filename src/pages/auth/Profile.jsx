@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const Profile = () => {
   const { user } = useAuth();

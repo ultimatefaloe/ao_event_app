@@ -42,7 +42,7 @@ export const useEventStore = create(
           location: data.location,
           attendees: data.attendees || 0,
           thunmailUrl:
-            "https://picsum.photos/seed/picsum/200/300" ?? data.thunmailUrl,
+             data.thunmailUrl ?? "https://picsum.photos/seed/picsum/200/300",
         };
 
         set((state) => ({
